@@ -34,6 +34,87 @@ verandert is hoe en waar ze draait.
 - Mijn wachtwoord in een `.env`-bestand gezet dat in `.gitignore` staat, met een `.env.example` als voorbeeld.
 - Mijn image met versienummer 1.0 gepusht naar `ghcr.io/omerhiz95/storingsmelder:1.0` en het package publiek gemaakt.
 
+### Starten vanaf nul
+
+```
+git clone https://github.com/omerhiz95/cloud-computing.git
+cd cloud-computing
+copy .env.example .env
+```
+
+Open `.env` en vul de waardes in (`POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`). Start daarna alles:
+
+```
+docker compose up -d --build
+```
+
+De applicatie draait op http://localhost:8000. Controleer met `docker compose ps` dat de database `healthy` is.
+
+### Stoppen
+
+- `docker compose down` stopt alles. De meldingen blijven bewaard in de volumes.
+- `docker compose down -v` stopt alles en verwijdert ook de volumes, dus ook de meldingen.
+
+### Bestanden in deze repo
+
+```
+app.py              de applicatie
+requirements.txt    de pakketten die ze nodig heeft
+templates/          de HTML van de webpagina
+Dockerfile          bouwt het image van de applicatie
+compose.yaml        start de applicatie en PostgreSQL samen
+.env.example        de namen van de instellingen, zonder waardes
+.dockerignore       wat niet mee in het image gaat
+```
+
+---
+### Gebruikte commando's
+
+**Git**
+
+| Commando | Wat het doet |
+|---|---|
+| `git clone <url>` | Haalt een repo van GitHub naar mijn laptop |
+| `git status` | Toont welke bestanden gewijzigd of nieuw zijn (en of `.env` niet per ongeluk meegaat) |
+| `git add .` | Zet alle wijzigingen klaar voor de volgende commit |
+| `git commit -m "bericht"` | Slaat de klaargezette wijzigingen lokaal op als een commit |
+| `git push` | Stuurt mijn commits naar GitHub |
+| `git pull` | Haalt nieuwe commits van GitHub naar mijn laptop |
+
+**Docker**
+
+| Commando | Wat het doet |
+|---|---|
+| `docker build -t storingsmelder .` | Bouwt een image uit de `Dockerfile` in de huidige map |
+| `docker run -d -p 8000:8000 --name storingsmelder storingsmelder` | Start een container op de achtergrond en koppelt poort 8000 van mijn laptop aan de container |
+| `docker run -v storingsmelder-data:/data ...` | Hangt een volume aan `/data`, zodat de data de container overleeft |
+| `docker ps` / `docker ps -a` | Toont draaiende containers / alle containers, ook de gestopte |
+| `docker logs <naam>` | Toont wat een container naar de console schreef |
+| `docker restart <naam>` | Herstart een container |
+| `docker rm -f <naam>` | Verwijdert een container (ook als hij nog draait) |
+| `docker images` | Toont de lokale images en hun grootte |
+| `docker history <image>` | Toont de lagen van een image en hun grootte |
+| `docker volume ls` | Toont de volumes |
+
+**Docker Compose**
+
+| Commando | Wat het doet |
+|---|---|
+| `docker compose up -d --build` | Bouwt de image en start alle services op de achtergrond |
+| `docker compose ps` | Toont de status per service (bij `db` hoort `healthy` te staan) |
+| `docker compose logs <service>` | Toont de logs van één service |
+| `docker compose config` | Toont het compose-bestand met alle waardes uit `.env` ingevuld |
+| `docker compose down` | Stopt en verwijdert de containers en het netwerk, de volumes (en dus de data) blijven |
+| `docker compose down -v` | Doet hetzelfde maar verwijdert ook de volumes, dus ook de data |
+
+**Image naar de registry (ghcr.io)**
+
+| Commando | Wat het doet |
+|---|---|
+| `docker login ghcr.io -u omerhiz95 --password-stdin` | Logt in bij de GitHub-registry met een token (nooit in de repo) |
+| `docker tag storingsmelder ghcr.io/omerhiz95/storingsmelder:1.0` | Geeft het image de volledige registrynaam met versienummer |
+| `docker push ghcr.io/omerhiz95/storingsmelder:1.0` | Uploadt het image naar de registry |
+| `docker pull ghcr.io/omerhiz95/storingsmelder:1.0` | Haalt het image van de registry naar mijn laptop |
 
 ## Wat er in deze repo zit
 
