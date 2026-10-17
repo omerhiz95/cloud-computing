@@ -10,6 +10,30 @@ werkt er het hele semester mee. De applicatie zelf verandert bijna niet, wat
 verandert is hoe en waar ze draait.
 
 ---
+## Opdracht 1 Storingsmelder in containers=
+### Wat ik gedaan heb?
+**Week 1**
+- Docker Desktop, Git en Visual Studio Code geïnstalleerd.
+- Mijn eerste containers gestart met `docker run hello-world` en `docker run -d nginx`.
+- Containers weergegeven met `docker ps` en hun logs bekeken met `docker logs`.
+- Nginx geopend in de browser via poort 8000 op mijn laptop, met een poortkoppeling (`-p`).
+- Mijn eigen GitHub-repo `cloud-computing` aangemaakt, gecloned en mijn eerste commit gepusht.
+
+**Week 2**
+- Mijn eigen `Dockerfile` geschreven en er een image van gebouwd.
+- Een container gestart en Storingsmelder geopend op http://localhost:8000.
+- De bouwtijd gemeten met twee volgordes van de regels. Als `requirements.txt` apart en vóór de rest van de code wordt gekopieerd, blijft de `pip install`-laag in de cache en is een nieuwe build veel sneller.
+- De grootte van drie base images vergeleken (`python:3.14`, `-slim` en `-alpine`). Ik heb `python:3.14-slim` gekozen omdat [mijn reden, veel kleiner dan de volledige variant en bouwt zonder problemen].
+- Een `.dockerignore` gemaakt zodat `.git`, de database en andere onnodige bestanden niet in het image komen.
+
+**Week 3**
+- Een volume gebruikt zodat mijn meldingen een herstart en het verwijderen van de container overleven.
+- Een `compose.yaml` gemaakt met mijn applicatie en een PostgreSQL-database (`postgres:18`), met een eigen volume (`db-data`) voor de database.
+- De applicatie verbindt met de database via de servicenaam `db` in plaats van `localhost`, omdat `localhost` in een container naar de container zelf verwijst.
+- Een healthcheck (`pg_isready`) op de database toegevoegd en `depends_on` met `condition: service_healthy`, zodat `web` pas start als de database klaar is. Daarnaast `restart: unless-stopped` als vangnet.
+- Mijn wachtwoord in een `.env`-bestand gezet dat in `.gitignore` staat, met een `.env.example` als voorbeeld.
+- Mijn image met versienummer 1.0 gepusht naar `ghcr.io/omerhiz95/storingsmelder:1.0` en het package publiek gemaakt.
+
 
 ## Wat er in deze repo zit
 
