@@ -39,10 +39,10 @@ verandert is hoe en waar ze draait.
 ```
 git clone https://github.com/omerhiz95/cloud-computing.git
 cd cloud-computing
-copy .env.example .env
+cp .env.example .env
 ```
 
-Open `.env` en vul de waardes in (`POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`). Start daarna alles:
+Open `.env` en vul **alle** waardes in (`POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`). Zonder wachtwoord start de database niet. Start daarna alles:
 
 ```
 docker compose up -d --build
