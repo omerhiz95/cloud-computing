@@ -1,4 +1,4 @@
-Omer Hiz
+Door Omer Hiz
 # Storingsmelder
 
 Een klein meldingensysteem voor storingen. Je meldt een storing via een
@@ -23,7 +23,7 @@ verandert is hoe en waar ze draait.
 - Mijn eigen `Dockerfile` geschreven en er een image van gebouwd.
 - Een container gestart en Storingsmelder geopend op http://localhost:8000.
 - De bouwtijd gemeten met twee volgordes van de regels. Als `requirements.txt` apart en vóór de rest van de code wordt gekopieerd, blijft de `pip install`-laag in de cache en is een nieuwe build veel sneller.
-- De grootte van drie base images vergeleken (`python:3.14`, `-slim` en `-alpine`). Ik heb `python:3.14-slim` gekozen omdat [mijn reden, veel kleiner dan de volledige variant en bouwt zonder problemen].
+- De grootte van drie base images vergeleken (`python:3.14`, `-slim` en `-alpine`). Ik heb `python:3.14-slim` gekozen omdat het veel kleiner dan de volledige variant en bouwt zonder problemen.
 - Een `.dockerignore` gemaakt zodat `.git`, de database en andere onnodige bestanden niet in het image komen.
 
 **Week 3**
@@ -115,19 +115,6 @@ compose.yaml        start de applicatie en PostgreSQL samen
 | `docker tag storingsmelder ghcr.io/omerhiz95/storingsmelder:1.0` | Geeft het image de volledige registrynaam met versienummer |
 | `docker push ghcr.io/omerhiz95/storingsmelder:1.0` | Uploadt het image naar de registry |
 | `docker pull ghcr.io/omerhiz95/storingsmelder:1.0` | Haalt het image van de registry naar mijn laptop |
-
-## Wat er in deze repo zit
-
-```
-app.py              de applicatie
-requirements.txt    de pakketten die ze nodig heeft
-templates/          de HTML van de webpagina
-```
-
-## Wat er bewust niet in zit
-
-Geen Dockerfile en geen compose-bestand. Die schrijf je zelf, dat is precies
-wat je in dit vak leert.
 
 ---
 
